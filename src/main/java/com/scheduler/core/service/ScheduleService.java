@@ -6,11 +6,13 @@ import com.scheduler.core.repository.JobInstanceRepository;
 import com.scheduler.core.repository.JobRepository;
 import com.scheduler.core.util.CronParserUtil;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public class ScheduleService {
 
     public JobRepository jobRepository;
@@ -21,9 +23,10 @@ public class ScheduleService {
         this.jobInstanceRepository = jobInstanceRepository;
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     @Transactional
     public void scheduledJobs() {
+        System.out.println("running job...");
         List<Job> scheduledJobs = jobRepository.findByEnabledTrue();
 
         for (Job job : scheduledJobs) {
